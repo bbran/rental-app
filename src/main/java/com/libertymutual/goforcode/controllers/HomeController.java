@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.libertymutual.goforcode.models.Apartment;
 import com.libertymutual.goforcode.utilities.MustacheRenderer;
+import com.libertymutual.goforcode.utilities.VelocityRenderer;
 
 import spark.Request;
 import spark.Response;
@@ -18,7 +19,8 @@ public class HomeController {
 		model.put("apartments", apartments);
 		model.put("currentUser", req.session().attribute("currentUser"));
 		model.put("noUser", req.session().attribute("currentUser") == null);
-		return MustacheRenderer.getInstance().render("home/index.html", model);
+//		return MustacheRenderer.getInstance().render("home/index.html", model);
+		return VelocityRenderer.getInstance().render(model, "home/index2.html");
 	};
 
 }
