@@ -1,45 +1,41 @@
 package com.libertymutual.goforcode.models;
 
-import java.util.ArrayList;
+import org.javalite.activejdbc.Model;
 
-public class User {
-	private String email;
-	private String password;
-	private String firstName;
-	private String lastName;
+public class User extends Model {
 	
 	public User()	{}
 	
 	public User(String email, String password, String firstName, String lastName)	{
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		setEmail(email);
+		setPassword(password);
+		setFirstName(firstName);
+		setLastName(lastName);
 	}
 	
 	public String getEmail() {
-		return email;
+		return getString("email");
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		set("email", email);
 	}
 	public String getPassword() {
-		return password;
+		return getString("password");
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		set("password", password);
 	}
 	public String getFirstName() {
-		return firstName;
+		return getString("first_name");
 	}
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		set("first_name", firstName);
 	}
 	public String getLastName() {
-		return lastName;
+		return getString("last_name");
 	}
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		set("last_name", lastName);
 	}
 
 }

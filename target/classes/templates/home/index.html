@@ -6,10 +6,12 @@
 </head>
 <body>
 	{{#noUser}}
-		<a href="/login">Login</a>
+		<a href="/login"><button>Login</button></a>
 	{{/noUser}}
 	{{#currentUser}}
 		Welcome, {{ firstName }}
+		<a href="/logout"><button>Logout</button></a>
+		</form>
 	{{/currentUser}}
 	<h1>Apartments!</h1>
 	{{#apartments}}
@@ -17,5 +19,6 @@
 			<a href="/apartments/{{ id }}">{{ address }}</a>
 		</div>
 	{{/apartments}}
+	<a href="apartments/new"><button>Create New Apartment</button></a>
 </body>
 </html>

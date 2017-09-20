@@ -1,112 +1,70 @@
 package com.libertymutual.goforcode.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.javalite.activejdbc.Model;
 
-public class Apartment {
-	private int id;
-	private int rent;
-	private int numberOfBedrooms;
-	private int numberOfBathrooms;
-	private int squareFootage;
-	private String address;
-	private String city;
-	private String state;
-	private String zip;
+public class Apartment extends Model{
 	
 	public Apartment()	{}
 	
-	public Apartment(int id, int rent, int numberOfBedrooms, int numberOfBathrooms, int squareFootage, String address, String city, String state, String zip)	{
-		this.id = id;
-		this.rent = rent;
-		this.numberOfBathrooms = numberOfBathrooms;
-		this.numberOfBedrooms = numberOfBedrooms;
-		this.squareFootage = squareFootage;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
+	public Apartment(int rent, int numberOfBedrooms, int numberOfBathrooms, int squareFootage, String address, String city, String state, String zip)	{
+		setRent(rent);
+		setNumberOfBathrooms(numberOfBathrooms);
+		setNumberOfBedrooms(numberOfBedrooms);
+		setSquareFootage(squareFootage);
+		setAddress(address);
+		setCity(city);
+		setState(state);
+		setZip(zip);
 	}
 	
 	public int getNumberOfBedrooms() {
-		return numberOfBedrooms;
+		return getInteger("number_of_bedrooms");
 	}
-	public void setNumberOfBedrooms(short numberOfBedrooms) {
-		this.numberOfBedrooms = numberOfBedrooms;
+	public void setNumberOfBedrooms(int numberOfBedrooms) {
+		set("number_of_bedrooms", numberOfBedrooms);
 	}
 	public int getNumberOfBathrooms() {
-		return numberOfBathrooms;
+		return getInteger("number_of_bathrooms");
 	}
-	public void setNumberOfBathrooms(short numberOfBathrooms) {
-		this.numberOfBathrooms = numberOfBathrooms;
+	public void setNumberOfBathrooms(int numberOfBathrooms) {
+		set("number_of_bathrooms", numberOfBathrooms);
 	}
 	public int getSquareFootage() {
-		return squareFootage;
+		return getInteger("square_footage");
 	}
 	public void setSquareFootage(int squareFootage) {
-		this.squareFootage = squareFootage;
+		set("square_footage", squareFootage);
 	}
 	public String getAddress() {
-		return address;
+		return getString("address");
 	}
 	public void setAddress(String address) {
-		this.address = address;
+		set("address", address);
 	}
 	public String getCity() {
-		return city;
+		return getString("city");
 	}
 	public void setCity(String city) {
-		this.city = city;
+		set("city", city);
 	}
 	public String getState() {
-		return state;
+		return getString("state");
 	}
 	public void setState(String state) {
-		this.state = state;
+		set("state", state);
 	}
 	public String getZip() {
-		return zip;
+		return getString("zip");
 	}
 	public void setZip(String zip) {
-		this.zip = zip;
-	}
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		set("zip", zip);
 	}
 
 	public int getRent() {
-		return rent;
+		return getInteger("rent");
 	}
 
 	public void setRent(int rent) {
-		this.rent = rent;
+		set("rent", rent);
 	}
-
-	public void setNumberOfBedrooms(int numberOfBedrooms) {
-		this.numberOfBedrooms = numberOfBedrooms;
-	}
-
-	public void setNumberOfBathrooms(int numberOfBathrooms) {
-		this.numberOfBathrooms = numberOfBathrooms;
-	}
-	
-	public static List<Apartment> findAll() {
-		java.util.List<Apartment> apartments = new ArrayList<Apartment>();
-		apartments.add(new Apartment(1, 1500, 1, 0, 350, "123 Main St", "San Francisco", "CA", "95125"));
-		apartments.add(new Apartment(2, 4000, 5, 6, 4000, "123 Fake St", "Seattle", "FL", "66666"));
-		return apartments;
-	}
-	
-	public static Apartment findById(int id)	{
-		if(id == 1 || id == 2)	{
-			return findAll().get(id-1);
-		}
-		return null;
-	}
-
 }

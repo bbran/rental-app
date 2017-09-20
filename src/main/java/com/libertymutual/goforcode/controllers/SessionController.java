@@ -3,7 +3,11 @@ package com.libertymutual.goforcode.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.javalite.activejdbc.Model;
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.libertymutual.goforcode.models.User;
+import com.libertymutual.goforcode.utilities.AutoCloseableDb;
 import com.libertymutual.goforcode.utilities.MustacheRenderer;
 
 import spark.Request;
@@ -12,15 +16,26 @@ import spark.Route;
 
 public class SessionController {
 	public static final Route newForm = (Request req, Response res) -> {
-		return MustacheRenderer.getInstance().render("session/newForm.html", null);
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("returnPath", req.queryParams("returnPath"));
+		return MustacheRenderer.getInstance().render("session/newForm.html", model);
 	};
 	
 	public static final Route create = (Request req, Response res) -> {
 		String email = req.queryParams("email");
 		String password = req.queryParams("password");
-		User user = new User(email, password, "Bob", "Smith");
-		Map<String, Object> model = new HashMap<String, Object>();
-		req.session().attribute("currentUser", user);
+		try (AutoCloseableDb db = new AutoCloseableDb())	{
+			User user = User.findFirst("email = ?", email);
+			if (user != null && BCrypt.checkpw(password, user.getPassword()))	{
+				req.session().attribute("currentUser", user);
+			}
+		}
+		res.redirect(req.queryParamOrDefault("returnPath", "/"));
+		return "";
+	};
+
+	public static final Route destroy = (Request req, Response res) -> {
+		req.session().attribute("currentUser", null);
 		res.redirect("/");
 		return "";
 	};
