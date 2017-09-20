@@ -17,6 +17,12 @@ public class Apartment extends Model{
 		setZip(zip);
 	}
 	
+	public int getUserId()	{
+		return getInteger("user_id");
+	}
+	public void setUserId(long userId)	{
+		set("user_id", userId);
+	}
 	public int getNumberOfBedrooms() {
 		return getInteger("number_of_bedrooms");
 	}

@@ -25,17 +25,26 @@ public class Application {
 		String hashed = BCrypt.hashpw("test", BCrypt.gensalt());
 		
 		try (AutoCloseableDb db = new AutoCloseableDb())	{
-		User.deleteAll();
-		new User("a@b.com", hashed, "Ben", "Brandvig").saveIt();
-		
 		Apartment.deleteAll();
-		new Apartment(1500, 1, 0, 350, "123 Main St", "San Francisco", "CA", "95125").saveIt();
-		new Apartment(4000, 5, 6, 4000, "123 Fake St", "Seattle", "FL", "66666").saveIt();
+		User.deleteAll();
+		User ben = new User("a@b.com", hashed, "Ben", "Brandvig");
+		ben.saveIt();
+
+		Apartment apt1 = new Apartment(1500, 1, 0, 350, "123 Main St", "San Francisco", "CA", "95125");
+		Apartment apt2 = new Apartment(4000, 5, 6, 4000, "123 Fake St", "Seattle", "FL", "66666");
+		apt1.saveIt();
+		apt2.saveIt();
+		ben.add(apt1);
+		ben.add(apt2);
+		
 		}
 		
 		path("/apartments", () -> {
 			before("/new", SecurityFilters.isAuthenticated);
 			get("/new", ApartmentController.newForm);
+			
+			before("/mine", SecurityFilters.isAuthenticated);
+			get("/mine", ApartmentController.index);
 			
 			get("/:id", ApartmentController.details);
 			
@@ -48,7 +57,7 @@ public class Application {
 		post("/login", SessionController.create);
 		get("/signup", UserController.newForm);
 		post("/signup", UserController.create);
-		post("/logout", SessionController.destroy);
+		get("/logout", SessionController.destroy);
 		
 		path("/api", ()	-> {
 			get("/apartments/:id", ApartmentApiController.details);

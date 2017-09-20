@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Apartments</title>
+</head>
+<body>
+	<h1>My Apartment Listings</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip</th>
+				<th># Bedrooms</th>
+				<th># Bathrooms</th>
+				<th>Sqft</th>
+				<th>Rent</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#apartments}}
+				<tr>
+					<td>{{ address }}</td>
+					<td>{{ city }}</td>
+					<td>{{ state }}</td>
+					<td>{{ zip }}</td>
+					<td>{{ numberOfBedrooms }}</td>
+					<td>{{ numberOfBathrooms }}</td>
+					<td>{{ squareFootage }}</td>
+					<td>{{ rent }}</td>
+				</tr>
+			{{/apartments}}
+		</tbody>
+	</table>
+</body>
+</html>
