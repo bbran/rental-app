@@ -31,7 +31,6 @@ public class ApartmentController {
 			model.put("likers", apartment.getAll(User.class));
 			model.put("listingActive", apartment.get("is_active"));
 			model.put("apartment", apartment);
-			System.out.println(model.toString());
 			return MustacheRenderer.getInstance().render("apartments/details.html", model);
 		}
 	};
