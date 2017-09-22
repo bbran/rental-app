@@ -1,0 +1,15 @@
+<div>
+	{{#noUser}}
+		<a href="/login">Login</a>
+		<a href="/users/new">Sign up</a>
+	{{/noUser}}
+	{{#currentUser}}
+		Welcome, {{ firstName }}
+		<a href="/apartments/mine">Your listings</a>
+		<a href="/apartments/new">Add a listing</a>
+		<form method="post" action="/logout">
+			<button>Logout</button>
+			<input type="hidden" name="csrf" value="{{ csrf }}">
+		</form>
+	{{/currentUser}}
+</div>

@@ -3,7 +3,6 @@ package com.libertymutual.goforcode.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.javalite.activejdbc.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.libertymutual.goforcode.models.User;
@@ -18,6 +17,9 @@ public class SessionController {
 	public static final Route newForm = (Request req, Response res) -> {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("returnPath", req.queryParams("returnPath"));
+		model.put("currentUser", req.session().attribute("currentUser"));
+		model.put("noUser", req.session().attribute("currentUser") == null);
+		model.put("csrf", req.session().attribute("csrfToken"));
 		return MustacheRenderer.getInstance().render("session/newForm.html", model);
 	};
 	

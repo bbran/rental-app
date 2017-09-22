@@ -6,7 +6,7 @@ public class Apartment extends Model{
 	
 	public Apartment()	{}
 	
-	public Apartment(int rent, int numberOfBedrooms, int numberOfBathrooms, int squareFootage, String address, String city, String state, String zip)	{
+	public Apartment(int rent, int numberOfBedrooms, int numberOfBathrooms, int squareFootage, String address, String city, String state, String zipCode)	{
 		setRent(rent);
 		setNumberOfBathrooms(numberOfBathrooms);
 		setNumberOfBedrooms(numberOfBedrooms);
@@ -14,13 +14,16 @@ public class Apartment extends Model{
 		setAddress(address);
 		setCity(city);
 		setState(state);
-		setZip(zip);
+		setZipCode(zipCode);
 	}
 	
-	public int getUserId()	{
-		return getInteger("user_id");
+	public Long getId()	{
+		return getLong("id");
 	}
-	public void setUserId(long userId)	{
+	public Long getUserId()	{
+		return getLong("user_id");
+	}
+	public void setUserId(Long userId)	{
 		set("user_id", userId);
 	}
 	public int getNumberOfBedrooms() {
@@ -59,18 +62,22 @@ public class Apartment extends Model{
 	public void setState(String state) {
 		set("state", state);
 	}
-	public String getZip() {
-		return getString("zip");
+	public String getZipCode() {
+		return getString("zip_code");
 	}
-	public void setZip(String zip) {
-		set("zip", zip);
+	public void setZipCode(String zipCode) {
+		set("zip_code", zipCode);
 	}
-
 	public int getRent() {
 		return getInteger("rent");
 	}
-
 	public void setRent(int rent) {
 		set("rent", rent);
+	}
+	public boolean getIsActive()	{
+		return getBoolean("is_active");
+	}
+	public void setIsActive(boolean isActive)	{
+		set("is_active", isActive);
 	}
 }

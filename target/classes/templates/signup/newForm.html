@@ -5,13 +5,15 @@
 <title>Sign up</title>
 </head>
 <body>
+	{{> /common/_navigation }}
 	<h1>You should probably sign up...</h1>
-	<form method="post" action "/signup">
+	<form method="post" action="/users">
 		<input name="email" type="email" placeholder="email" required>
 		<input name="password" type="password" placeholder="password" required>
-		<input name="firstName" type="text" placeholder="first name" required>
-		<input name="lastName" type="text" placeholder="last name" required>
-		<button>Submit</button>
+		<input name="first_name" type="text" placeholder="first name" required>
+		<input name="last_name" type="text" placeholder="last name" required>
+		<button>Sign up</button>
+		<input type="hidden" name="csrf" value="{{ csrf }}">
 	</form>
 </body>
 </html>

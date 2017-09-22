@@ -5,8 +5,9 @@
 <title>Apartment detail</title>
 </head>
 <body>
+	{{> /common/_navigation }}
 	<div>
-		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }}, {{ apartment.zip }}
+		{{ apartment.address }}, {{ apartment.city }}, {{ apartment.state }}, {{ apartment.zipCode }}
 	</div>
 	<div>
 		Baths: {{ apartment.numberOfBathrooms }}
@@ -20,5 +21,42 @@
 	<div>
 		Rent: {{ apartment.rent }}
 	</div>
+	{{#noUser}}
+		<a href="/login?returnPath=/apartments/{{ apartment.id }}">Login to LIKE this apartment</a>
+	{{/noUser}}
+	{{#currentUser}}
+		{{^isLister}}
+			{{^isLiker}}
+				<form method="post" action="/apartments/{{ apartment.id }}/like">
+					<button>Like this apartment</button>
+					<input type="hidden" name="csrf" value="{{ csrf }}">
+				</form>
+			{{/isLiker}}
+		{{/isLister}}
+		{{#isLister}}
+			<br>
+			<div>
+				{{ likers.size }} users have liked this listing: 
+				{{#likers}}
+					<br>
+					{{firstName}} {{lastName}}
+				{{/likers}}
+			</div>
+			<div>
+				{{#listingActive}}
+					<form method="post" action="/apartments/{{ apartment.id }}/deactivations">
+						<button>Deactivate listing</button>
+						<input type="hidden" name="csrf" value="{{ csrf }}">
+					</form>
+				{{/listingActive}}
+				{{^listingActive}}
+					<form method="post" action="/apartments/{{ apartment.id }}/activations">
+						<button>Activate listing</button>
+						<input type="hidden" name="csrf" value="{{ csrf }}">
+					</form>
+				{{/listingActive}}
+			</div>
+		{{/isLister}}
+	{{/currentUser}}
 </body>
 </html>

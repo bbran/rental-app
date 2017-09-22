@@ -37,5 +37,8 @@ public class User extends Model {
 	public void setLastName(String lastName) {
 		set("last_name", lastName);
 	}
+	public Long getId()	{
+		return getLong("id");
+	}
 
 }
