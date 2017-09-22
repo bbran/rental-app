@@ -24,8 +24,7 @@ public class SecurityFilters {
 		User currentUser = (User) req.session().attribute("currentUser");
 		try (AutoCloseableDb db = new AutoCloseableDb())	{
 			Apartment apartment = Apartment.findById(Integer.parseInt(req.params("id")));
-			if (apartment.getUserId() != currentUser.getId())	{
-				res.redirect(req.pathInfo());
+			if (!apartment.getUserId().equals(currentUser.getId()))	{
 				halt();
 			}
 		}
@@ -40,5 +39,6 @@ public class SecurityFilters {
 		if (req.session().isNew())	{
 			req.session().attribute("csrfToken", UUID.randomUUID());			
 		}
+		System.out.println(req.cookies());
 	};
 }

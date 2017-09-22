@@ -21,7 +21,7 @@ public class ApartmentController {
 			Apartment apartment = Apartment.findById(Integer.parseInt(req.params(":id")));
 			Map<String, Object> model = new HashMap<String, Object>();
 			if (null != currentUser)	{
-				model.put("isLister", (long) apartment.get("user_id") == (long) currentUser.get("id"));
+				model.put("isLister", apartment.getUserId().equals(currentUser.getId()));
 				model.put("isLiker", null != ApartmentsUsers.findFirst("apartment_id = ? AND user_id = ?", apartment.getId(), currentUser.getId()));
 				model.put("currentUser", currentUser);
 				model.put("csrf", req.session().attribute("csrfToken"));
