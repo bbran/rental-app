@@ -44,14 +44,14 @@ public class Application {
 		get("/", HomeController.index);
 		
 		path("/login", () -> {
-			before("", SecurityFilters.csrfPostMatch);
+//			before("", SecurityFilters.csrfPostMatch);
 			get("", SessionController.newForm);
 			post("", SessionController.create);
 		});
 		
 		path("/users", () -> {
 			get("/new", UserController.newForm);
-			before("", SecurityFilters.csrfPostMatch);
+//			before("", SecurityFilters.csrfPostMatch);
 			post("", UserController.create);
 		});
 		
@@ -64,26 +64,26 @@ public class Application {
 			
 			get("/:id", ApartmentController.details);
 			
-			before("", SecurityFilters.csrfPostMatch);
+//			before("", SecurityFilters.csrfPostMatch);
 			before("", SecurityFilters.isAuthenticated);
 			post("", ApartmentController.create);
 			
-			before("/:id/like", SecurityFilters.csrfPostMatch);
+//			before("/:id/like", SecurityFilters.csrfPostMatch);
 			before("/:id/like", SecurityFilters.isAuthenticated);
 			post("/:id/like", LikeController.like);
 			
-			before("/:id/activations", SecurityFilters.csrfPostMatch);
+//			before("/:id/activations", SecurityFilters.csrfPostMatch);
 			before("/:id/activations", SecurityFilters.isAuthenticated);
 			before("/:id/activations", SecurityFilters.isLister);
 			post("/:id/activations", ApartmentController.activate);
 			
-			before("/:id/deactivations", SecurityFilters.csrfPostMatch);
+//			before("/:id/deactivations", SecurityFilters.csrfPostMatch);
 			before("/:id/deactivations", SecurityFilters.isAuthenticated);
 			before("/:id/deactivations", SecurityFilters.isLister);
 			post("/:id/deactivations", ApartmentController.deactivate);
 		});
 		
-		before("/logout", SecurityFilters.csrfPostMatch);
+//		before("/logout", SecurityFilters.csrfPostMatch);
 		post("/logout", SessionController.destroy);
 		
 		path("/api", ()	-> {
