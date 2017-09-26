@@ -25,20 +25,19 @@ public class SecurityFilters {
 		try (AutoCloseableDb db = new AutoCloseableDb())	{
 			Apartment apartment = Apartment.findById(Integer.parseInt(req.params("id")));
 			if (!apartment.getUserId().equals(currentUser.getId()))	{
-				halt();
+				halt(401);
 			}
 		}
 	};
 	public static final Filter csrfPostMatch = (Request req, Response res) -> {
 		String csrf = req.queryParams("csrf");
 		if (req.requestMethod() == "POST" && !req.session().attribute("csrfToken").toString().equals(csrf))	{
-			halt();
+			halt(401);
 		}
 	};
 	public static final Filter setCsrfToken = (Request req, Response res) -> {
 		if (req.session().isNew())	{
 			req.session().attribute("csrfToken", UUID.randomUUID());			
 		}
-		System.out.println(req.cookies());
 	};
 }

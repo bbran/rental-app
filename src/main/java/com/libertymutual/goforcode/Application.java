@@ -31,6 +31,8 @@ public class Application {
 			ben.saveIt();
 			Apartment apt1 = new Apartment(1500, 1, 0, 350, "123 Main St", "San Francisco", "CA", "95125");
 			Apartment apt2 = new Apartment(4000, 5, 6, 4000, "123 Fake St", "Seattle", "FL", "66666");
+			apt1.setIsActive(true);
+			apt2.setIsActive(true);
 			ben.add(apt1);
 			ben.add(apt2);
 			apt1.saveIt();
@@ -88,6 +90,7 @@ public class Application {
 		
 		path("/api", ()	-> {
 			get("/apartments/:id", ApartmentApiController.details);
+			get("/apartments", ApartmentApiController.index);
 			post("/apartments", ApartmentApiController.create);
 			post("/users", UserApiController.create);
 		});
