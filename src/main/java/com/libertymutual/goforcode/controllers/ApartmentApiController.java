@@ -1,7 +1,6 @@
 package com.libertymutual.goforcode.controllers;
 
 import com.libertymutual.goforcode.models.Apartment;
-import com.libertymutual.goforcode.models.User;
 import com.libertymutual.goforcode.utilities.AutoCloseableDb;
 
 import static spark.Spark.notFound;
@@ -42,12 +41,8 @@ public class ApartmentApiController {
 	public static final Route index = (Request req, Response res) -> {
 		try (AutoCloseableDb db = new AutoCloseableDb())	{
 			LazyList<Apartment> activeApartments = Apartment.where("is_active = ?", true);
-			if (activeApartments.size() > 0)	{
-				res.header("Content-Type", "application/json");
-				return activeApartments.toJson(true);
-			}
-			notFound("Did not find that.");
-			return "";
+			res.header("Content-Type", "application/json");
+			return activeApartments.toJson(true);
 		}
 	};
 	

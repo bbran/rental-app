@@ -8,6 +8,7 @@ import com.libertymutual.goforcode.controllers.ApartmentApiController;
 import com.libertymutual.goforcode.controllers.ApartmentController;
 import com.libertymutual.goforcode.controllers.HomeController;
 import com.libertymutual.goforcode.controllers.LikeController;
+import com.libertymutual.goforcode.controllers.SessionApiController;
 import com.libertymutual.goforcode.controllers.SessionController;
 import com.libertymutual.goforcode.controllers.UserApiController;
 import com.libertymutual.goforcode.controllers.UserController;
@@ -40,6 +41,8 @@ public class Application {
 			ApartmentsUsers aptUser = new ApartmentsUsers(apt1.getId(), ben.getId());
 			aptUser.saveIt();
 		}
+		
+		enableCORS("http://localhost:4200", "*", "*");
 		
 		before("/*", SecurityFilters.setCsrfToken);
 		
@@ -93,6 +96,35 @@ public class Application {
 			get("/apartments", ApartmentApiController.index);
 			post("/apartments", ApartmentApiController.create);
 			post("/users", UserApiController.create);
+			post("/login", SessionApiController.create);
 		});
 	}
+	
+	// Enables CORS on requests. This method is an initialization method and should be called once.
+	private static void enableCORS(final String origin, final String methods, final String headers) {
+
+	    options("/*", (request, response) -> {
+
+	        String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+	        if (accessControlRequestHeaders != null) {
+	            response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+	        }
+
+	        String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
+	        if (accessControlRequestMethod != null) {
+	            response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+	        }
+
+	        return "OK";
+	    });
+
+        before((request, response) -> {
+            response.header("Access-Control-Allow-Origin", origin);
+            response.header("Access-Control-Request-Method", methods);
+            response.header("Access-Control-Allow-Headers", headers);
+            response.header("Access-Control-Allow-Credentials", "true");
+        });
+	    
+	}
+	
 }
